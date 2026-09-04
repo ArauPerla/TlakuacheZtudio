@@ -45,13 +45,13 @@ input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 
 .check{display:flex;align-items:center;gap:9px;padding:13px;background:#f7f7f8;border-radius:10px;font-weight:400;margin:0;cursor:pointer}
 .check input{width:18px;height:18px;accent-color:var(--accent)}
 .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .tab{border:1px solid #ddd;background:#fff;border-radius:11px;padding:12px 8px;font-weight:800;cursor:pointer}
 .tab.active{background:#111;color:var(--accent);border-color:#111}
 .helper{font-size:11px;color:var(--muted);line-height:1.5;margin-top:7px}
 .subbox{background:#f7f7f8;border-radius:14px;padding:16px;margin-top:14px}
 .subbox-title{font-weight:800;margin-bottom:8px}
-.price-card{background:#111;color:#fff;border-radius:20px;padding:24px;position:sticky;top:88px}
+.price-card{background:#111;color:#fff;border-radius:20px;padding:24px;position:sticky;top:100px}
 .preview{background:#111;color:#fff;border-radius:20px;padding:24px;margin:0 0 22px;box-shadow:0 8px 30px #00000018}
 .preview-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
 .preview-title{font-weight:800;font-size:25px}.preview-note{font-size:20px;color:#888;text-align:right}
@@ -86,6 +86,117 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
 .ref-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
 .ref-table td,.ref-table th{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left}
 .ref-table th{font-size:11px;text-transform:uppercase;color:var(--muted)}
+
+.choice-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:8px;
+}
+.choice-btn{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:11px;
+  padding:12px 8px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.15s;
+}
+.choice-btn:hover{border-color:#bbb}
+.choice-btn.active{
+  background:#111;
+  color:var(--accent);
+  border-color:#111;
+}
+.preview-lines{
+  position:relative;
+  z-index:1;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:20px;
+}
+.preview-lines .neon-text{
+  max-width:94%;
+  padding:0 20px;
+}
+.preview-lines .neon-text:empty{display:none}
+
+
+.collapse-btn{
+  width:100%;
+  border:1px solid #ddd;
+  background:#f7f7f8;
+  border-radius:12px;
+  padding:13px 14px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:14px;
+}
+.collapse-btn:hover{border-color:#bbb}
+.collapse-btn .arrow{
+  transition:transform .2s ease;
+  font-size:14px;
+}
+.collapse-btn.open .arrow{transform:rotate(180deg)}
+.collapse-content{
+  display:none;
+}
+.collapse-content.open{
+  display:block;
+}
+
+
+.invoice-box{
+  margin-top:18px;
+  padding:15px;
+  border:1px solid #333;
+  border-radius:13px;
+  background:#181818;
+}
+.invoice-check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  font-weight:800;
+  margin:0;
+}
+.invoice-check input{
+  width:18px;
+  height:18px;
+  accent-color:var(--accent);
+}
+.invoice-details{
+  display:none;
+  margin-top:13px;
+  padding-top:13px;
+  border-top:1px solid #333;
+}
+.invoice-details.show{display:block}
+.invoice-line{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin:8px 0;
+  font-size:13px;
+  color:#ddd;
+}
+.invoice-line b{color:#fff}
+.invoice-grand{
+  font-size:17px;
+  padding-top:10px;
+  margin-top:10px;
+  border-top:1px solid #333;
+}
+.invoice-grand b{color:var(--accent)}
+
 @media(max-width:850px){.layout{grid-template-columns:1fr}.price-card{position:static}}
 @media(max-width:620px){.row,.row3,.options,.tabs,.preview-controls{grid-template-columns:1fr}.hero h1{font-size:28px}.card{padding:20px}.header-note{display:none}.preview{padding:16px}.preview-stage{height:250px}.neon-text{font-size:clamp(52px,18vw,90px);padding:16px}}
 @media print{header,.actions,.preview-controls{display:none}body{background:#fff}main{max-width:none;margin:0}.layout{grid-template-columns:1fr}.price-card{position:static;background:#fff;color:#111;border:1px solid #ddd}.price,.total b,.line b{color:#111;text-shadow:none}.line,.price-label{color:#333}}
@@ -108,12 +219,17 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
       <div class="preview-note">Representación aproximada</div>
     </div>
     <div class="preview-stage">
-      <div class="neon-text cursive" id="neonPreview">Tu frase aquí</div>
+      <div class="preview-lines">
+        <div class="neon-text cursive" id="neonPreview">Tu frase aquí</div>
+        <div class="neon-text cursive" id="neonPreview2"></div>
+      </div>
     </div>
     <div class="preview-controls">
       <div>
         <label for="previewText">Texto del letrero</label>
-        <input id="previewText" type="text" maxlength="40" value="Tu frase aquí" placeholder="Escribe tu frase">
+        <input id="previewText" type="text" maxlength="40" value="Tu frase aquí" placeholder="Escribe la primera línea">
+        <label for="previewText2" style="margin-top:8px">Línea extra <span style="font-weight:400;color:#888">(opcional)</span></label>
+        <input id="previewText2" type="text" maxlength="40" value="" placeholder="Escribe una segunda línea">
       </div>
       <div class="style-buttons">
         <button class="style-btn active" type="button" data-style="cursive">Letra cursiva</button>
@@ -151,10 +267,11 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
         <div class="tabs">
           <button class="tab active" data-mode="letrero">Letrero</button>
           <button class="tab" data-mode="acrilico">Solo acrílico</button>
+          <button class="tab" data-mode="corte">Tiempo de corte</button>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="acrylicCard">
         <div class="section-head">
           <div class="num">2</div>
           <div><h2>Medidas y acrílicos</h2><p>Los precios de acrílico se calculan por cm².</p></div>
@@ -195,16 +312,22 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
           <input id="extra5" type="checkbox">
           <span></span>
         </label>
-        <div class="subbox">
-          <div class="subbox-title">Tiempo de corte</div>
-          <div class="row">
-            <div>
-              <label>Minutos</label>
-              <input id="cortesAcrilico" type="number" min="0" step="1" value="0">
-            </div>
-            <div>
-              <label>Costo por minuto</label>
-              <input type="number" value="8" disabled>
+        <button class="collapse-btn" type="button" id="toggleCutTime" aria-expanded="false">
+          <span>Tiempo de corte</span>
+          <span class="arrow">▼</span>
+        </button>
+
+        <div class="collapse-content" id="cutTimeContent">
+          <div class="subbox">
+            <div class="row">
+              <div>
+                <label>Minutos</label>
+                <input id="cortesAcrilico" type="number" min="0" step="1" value="0">
+              </div>
+              <div>
+                <label>Costo por minuto</label>
+                <input type="number" value="8" disabled>
+              </div>
             </div>
           </div>
         </div>
@@ -219,8 +342,13 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
 
         <div class="row">
           <div>
-            <label>Metros de tira neón</label>
-            <input id="neonM" type="number" min="0" step=".1" value="10">
+            <label>Dificultad del neón</label>
+            <input id="neonM" type="hidden" value="10">
+            <div class="choice-buttons" id="neonDifficulty">
+              <button class="choice-btn" type="button" data-value="5">Fácil</button>
+              <button class="choice-btn active" type="button" data-value="10">Intermedio</button>
+              <button class="choice-btn" type="button" data-value="15">Difícil</button>
+            </div>
           </div>
           <div>
             <label>Corte de vinil (m)</label>
@@ -242,7 +370,7 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
         </select>
       </div>
 
-      <div class="card">
+      <div class="card" id="accessoriesCard">
         <div class="section-head">
           <div class="num">4</div>
           <div><h2>Accesorios y consumibles</h2><p>Completa las cantidades necesarias para el proyecto.</p></div>
@@ -270,21 +398,21 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="workCard">
         <div class="section-head">
           <div class="num">5</div>
           <div><h2>Diseño y nivel de trabajo</h2><p>El total final multiplica el subtotal por el nivel de trabajo, como en el archivo.</p></div>
         </div>
 
-        <div class="row">
-          <div>
-            <label>Unidades de diseño ($50/u)</label>
-            <input id="diseno" type="number" min="0" step=".5" value="1">
-            <div class="helper">Referencia del archivo: 1 = texto sencillo; 2 = trazar logo.</div>
-          </div>
-          <div>
-            <label>Nivel de trabajo</label>
-            <input id="nivel" type="number" min="1" step=".5" value="3">
+        <div>
+          <input id="diseno" type="hidden" value="1">
+
+          <label>Nivel de trabajo</label>
+          <input id="nivel" type="hidden" value="2.5">
+          <div class="choice-buttons" id="workLevel">
+            <button class="choice-btn" type="button" data-value="2">Fácil</button>
+            <button class="choice-btn active" type="button" data-value="2.5">Intermedio</button>
+            <button class="choice-btn" type="button" data-value="3">Difícil</button>
           </div>
         </div>
       </div>
@@ -305,32 +433,59 @@ button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px
       </div>
     </div>
 
+      <div class="card" id="cutOnlyCard" style="display:none">
+        <div class="section-head">
+          <div class="num">2</div>
+          <div><h2>Tiempo de corte</h2><p>Calcula el total según los minutos de trabajo.</p></div>
+        </div>
+
+        <label>Minutos</label>
+        <input id="soloCorteMin" type="number" min="0" step="1" value="0">
+
+        <div class="summary" style="margin-top:16px">
+          <b>Total de corte</b><br>
+          <span id="soloCorteFormula">0 min × $8 = $0 MXN</span>
+        </div>
+      </div>
+
     <aside class="price-card">
       <div class="price-label">Precio total estimado</div>
       <div class="price" id="total">$0 MXN</div>
 
-      <div class="breakdown" id="breakdown"></div>
-
-      <div class="line total">
-        <span>Subtotal materiales</span>
-        <b id="subtotal">$0</b>
-      </div>
-      <div class="line">
-        <span>Nivel de trabajo</span>
-        <b id="nivelText">× 3</b>
-      </div>
-      <div class="line total">
-        <span>TOTAL</span>
-        <b id="total2">$0</b>
-      </div>
+      <!-- Elementos internos conservados ocultos para mantener la lógica existente -->
+      <div id="breakdown" style="display:none"></div>
+      <span id="subtotal" style="display:none">$0</span>
+      <span id="nivelText" style="display:none">× 1</span>
+      <span id="total2" style="display:none">$0</span>
 
       <div class="summary" id="summary"></div>
+
+      <div class="invoice-box">
+        <label class="invoice-check">
+          <input id="requiereFactura" type="checkbox">
+          <span>Precio +IVA</span>
+        </label>
+
+        <div class="invoice-details" id="invoiceDetails">
+          <div class="invoice-line">
+            <span>Subtotal</span>
+            <b id="invoiceSubtotal">$0</b>
+          </div>
+          <div class="invoice-line">
+            <span>IVA (16%)</span>
+            <b id="invoiceIVA">$0</b>
+          </div>
+          <div class="invoice-line invoice-grand">
+            <span>Total con IVA</span>
+            <b id="invoiceTotal">$0</b>
+          </div>
+        </div>
+      </div>
 
       <div class="actions">
         <button class="action whatsapp" type="button" onclick="sendWhatsApp()">Enviar por WhatsApp</button>
         <button class="action secondary" onclick="applyPreset(currentMode)">Restablecer valores</button>
       </div>
-
     </aside>
   </div>
 </main>
@@ -370,12 +525,15 @@ const NEON_COLORS = {
 
 const presets = {
   letrero:{
-    alto:80,largo:40,mat1:"0.08",mat2:"0.14",extra5:false,cortes:0,
-    neon:10,vinil:0,fuente:"180",chap:0,cable:1,termofit:1,kola:true,estano:true,dimer:false,diseno:1,nivel:3
+    alto:0,largo:0,mat1:"0",mat2:"0",extra5:false,cortes:0,
+    neon:10,vinil:0,fuente:"0",chap:0,cable:0,termofit:0,kola:false,estano:false,dimer:false,diseno:0,nivel:2.5
   },
   acrilico:{
-    alto:100,largo:40,mat1:"0.08",mat2:"0",extra5:false,cortes:0,
-    neon:10,vinil:0,fuente:"180",chap:4,cable:0,termofit:0,kola:true,estano:false,dimer:false,diseno:2.5,nivel:2.5
+    alto:0,largo:0,mat1:"0",mat2:"0",extra5:false,cortes:0,
+    neon:10,vinil:0,fuente:"0",chap:0,cable:0,termofit:0,kola:false,estano:false,dimer:false,diseno:0,nivel:2.5
+  },
+  corte:{
+    soloCorteMin:0
   }
 };
 
@@ -400,7 +558,48 @@ function addLine(lines,name,val){
   if(val>0) lines.push([name,val]);
 }
 
+
+function updateInvoice(baseTotal){
+  const requiere = $("requiereFactura") && $("requiereFactura").checked;
+  const iva = baseTotal * 0.16;
+  const totalConIVA = baseTotal + iva;
+
+  if($("invoiceDetails")){
+    $("invoiceDetails").classList.toggle("show",requiere);
+  }
+  if($("invoiceSubtotal")) $("invoiceSubtotal").textContent = money(baseTotal);
+  if($("invoiceIVA")) $("invoiceIVA").textContent = money(iva);
+  if($("invoiceTotal")) $("invoiceTotal").textContent = money(totalConIVA);
+}
+
 function update(){
+  if(currentMode==="corte"){
+    const min = n("soloCorteMin");
+    const totalCorte = min * COSTOS.corteAcrilico;
+
+    $("subtotal").textContent = money(totalCorte);
+    $("nivelText").textContent = "× 1";
+    $("total").textContent = money(totalCorte);
+    $("total2").textContent = money(totalCorte);
+
+    $("breakdown").innerHTML = `
+      <div class="line"><span>Tiempo de corte</span><b>${money(totalCorte)}</b></div>
+    `;
+
+    $("summary").innerHTML = `
+      <b>Resumen</b><br>
+      Tipo: Tiempo de corte<br>
+      Minutos: ${min}<br>
+      <b>Total estimado: ${money(totalCorte)}</b>
+    `;
+
+    if($("soloCorteFormula")){
+      $("soloCorteFormula").textContent = `${min} min × $8 = ${money(totalCorte)}`;
+    }
+    updateInvoice(totalCorte);
+    return;
+  }
+
   const lines=[];
   const a1=calcAcrylic("material1");
   const a2=calcAcrylic("material2");
@@ -431,6 +630,7 @@ function update(){
   $("nivelText").textContent="× "+nivel;
   $("total").textContent=money(total);
   $("total2").textContent=money(total);
+  updateInvoice(total);
 
   $("breakdown").innerHTML=lines.map(([name,val])=>
     `<div class="line"><span>${name}</span><b>${money(val)}</b></div>`
@@ -451,50 +651,88 @@ function update(){
 
 function updatePreview(){
   const text = $("previewText").value.trim() || "Tu frase aquí";
+  const text2 = $("previewText2").value.trim();
   const neon = $("neonPreview");
-  neon.textContent = text;
-  neon.className = "neon-text " + currentLetterStyle;
-  const color = NEON_COLORS[currentNeonColor] || NEON_COLORS.green;
-  neon.style.setProperty("--neon-color",color.glow);
-  neon.style.setProperty("--neon-core",color.core);
-  $("colorName").textContent=color.name;
+  const neon2 = $("neonPreview2");
 
+  neon.textContent = text;
+  neon2.textContent = text2;
+
+  [neon,neon2].forEach(el=>{
+    el.className = "neon-text " + currentLetterStyle;
+  });
+
+  const color = NEON_COLORS[currentNeonColor] || NEON_COLORS.green;
+  [neon,neon2].forEach(el=>{
+    el.style.setProperty("--neon-color",color.glow);
+    el.style.setProperty("--neon-core",color.core);
+  });
+
+  $("colorName").textContent=color.name;
 }
 
 function sendWhatsApp(){
   const nivel=Math.max(1,n("nivel"));
   const texto=$("previewText").value.trim() || "Tu frase aquí";
+  const texto2=$("previewText2").value.trim();
   const color=NEON_COLORS[currentNeonColor] || NEON_COLORS.green;
   const tipoLetra=currentLetterStyle==="cursive" ? "Cursiva" : "Molde";
   const detalles=currentMode==="letrero"
-    ? `Texto: ${texto}\nTipografía: ${tipoLetra}\nColor: ${color.name}\n`
+    ? `Texto: ${texto}${texto2 ? `\nLínea extra: ${texto2}` : ""}\nTipografía: ${tipoLetra}\nColor: ${color.name}\n`
     : "";
   const mensaje=`Hola, quiero solicitar esta cotización de Tlakuache Ztudio:\n\nTipo: ${currentMode==="letrero"?"Letrero":"Solo acrílico"}\nMedidas: ${n("alto")} × ${n("largo")} cm\n${detalles}Nivel de trabajo: ${nivel}\nTotal estimado: ${$("total2").textContent}`;
   const popup=window.open("https://wa.me/525590572642?text="+encodeURIComponent(mensaje),"_blank");
   if(popup) popup.opener=null;
 }
 
+
+function setChoiceButtons(containerId,value){
+  document.querySelectorAll(`#${containerId} .choice-btn`).forEach(btn=>{
+    btn.classList.toggle("active", Number(btn.dataset.value)===Number(value));
+  });
+}
+
 function applyPreset(mode){
   currentMode=mode;
   const p=presets[mode];
+
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+
+  const soloAcrilico = mode === "acrilico";
+  const soloCorte = mode === "corte";
+
+  $("acrylicCard").style.display = soloCorte ? "none" : "block";
+  $("neonEnergyCard").style.display = (soloAcrilico || soloCorte) ? "none" : "block";
+  $("previewCard").style.display = (soloAcrilico || soloCorte) ? "none" : "block";
+  $("accessoriesCard").style.display = soloCorte ? "none" : "block";
+  $("workCard").style.display = soloCorte ? "none" : "block";
+  $("cutOnlyCard").style.display = soloCorte ? "block" : "none";
+
+  $("cableAccessory").style.display = soloAcrilico ? "none" : "block";
+  $("termofitAccessory").style.display = soloAcrilico ? "none" : "block";
+  $("estanoAccessory").style.display = soloAcrilico ? "none" : "flex";
+  $("dimerAccessory").style.display = soloAcrilico ? "none" : "flex";
+  $("referencesCard").style.display = "none";
+
+  if(soloCorte){
+    $("soloCorteMin").value = p.soloCorteMin;
+    update();
+    return;
+  }
+
   $("alto").value=p.alto;$("largo").value=p.largo;
   $("material1").value=p.mat1;$("material2").value=p.mat2;
   $("extra5").checked=p.extra5;$("cortesAcrilico").value=p.cortes;
   $("neonM").value=p.neon;$("vinilM").value=p.vinil;$("fuente").value=p.fuente;
   $("chapetones").value=p.chap;$("cable").value=p.cable;$("termofit").value=p.termofit;
   $("kola").checked=p.kola;$("estano").checked=p.estano;$("dimer").checked=p.dimer;
-  $("diseno").value=p.diseno;$("nivel").value=p.nivel;
+  $("diseno").value=p.diseno;
+  $("nivel").value=p.nivel;
 
-  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
-
-  const soloAcrilico = mode === "acrilico";
-  $("neonEnergyCard").style.display = soloAcrilico ? "none" : "block";
-  $("previewCard").style.display = soloAcrilico ? "none" : "block";
-  $("cableAccessory").style.display = soloAcrilico ? "none" : "block";
-  $("termofitAccessory").style.display = soloAcrilico ? "none" : "block";
-  $("estanoAccessory").style.display = soloAcrilico ? "none" : "flex";
-  $("dimerAccessory").style.display = soloAcrilico ? "none" : "flex";
-  $("referencesCard").style.display = "none";
+  if(![5,10,15].includes(Number($("neonM").value))) $("neonM").value=10;
+  if(![2,2.5,3].includes(Number($("nivel").value))) $("nivel").value=2.5;
+  setChoiceButtons("neonDifficulty",$("neonM").value);
+  setChoiceButtons("workLevel",$("nivel").value);
 
   update();
 }
@@ -506,6 +744,23 @@ document.querySelectorAll("input,select").forEach(el=>{
 document.querySelectorAll(".tab").forEach(btn=>{
   btn.addEventListener("click",()=>applyPreset(btn.dataset.mode));
 });
+
+document.querySelectorAll("#neonDifficulty .choice-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    $("neonM").value=btn.dataset.value;
+    setChoiceButtons("neonDifficulty",btn.dataset.value);
+    update();
+  });
+});
+
+document.querySelectorAll("#workLevel .choice-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    $("nivel").value=btn.dataset.value;
+    setChoiceButtons("workLevel",btn.dataset.value);
+    update();
+  });
+});
+
 document.querySelectorAll(".style-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     currentLetterStyle=btn.dataset.style;
@@ -524,6 +779,23 @@ document.querySelectorAll(".color-dot").forEach(btn=>{
     updatePreview();
   });
 });
+
+
+
+if($("requiereFactura")){
+  $("requiereFactura").addEventListener("change",update);
+}
+
+const cutToggle = $("toggleCutTime");
+const cutContent = $("cutTimeContent");
+
+if(cutToggle && cutContent){
+  cutToggle.addEventListener("click",()=>{
+    const isOpen = cutContent.classList.toggle("open");
+    cutToggle.classList.toggle("open",isOpen);
+    cutToggle.setAttribute("aria-expanded",isOpen ? "true" : "false");
+  });
+}
 
 applyPreset("letrero");
 </script>
