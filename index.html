@@ -55,9 +55,9 @@ input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 
 .preview{background:#111;color:#fff;border-radius:20px;padding:24px;margin:0 0 22px;box-shadow:0 8px 30px #00000018}
 .preview-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
 .preview-title{font-weight:800;font-size:25px}.preview-note{font-size:20px;color:#888;text-align:right}
-.preview-stage{height:200px;border-radius:25px;display:grid;place-items:center;overflow:hidden;position:relative;background:linear-gradient(145deg,#26272a,#111214);box-shadow:inset 0 0 55px #000}
-.preview-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ffffff05 1px,transparent 1px),linear-gradient(#ffffff05 1px,transparent 1px);background-size:28px 28px}
-.neon-text{--neon-color:#60ff38;--neon-core:#d8ffd0;position:relative;z-index:1;max-width:94%;padding:70px 80px;text-align:center;color:var(--neon-core);font-size:clamp(64px,10vw,200px);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 2px #fff,0 0 7px var(--neon-color),0 0 16px var(--neon-color),0 0 34px var(--neon-color),0 0 58px var(--neon-color);transition:font-family .2s,letter-spacing .2s,color .2s,text-shadow .2s}
+.preview-stage{height:200px;border-radius:25px;display:grid;place-items:center;overflow:visible;position:relative;background:linear-gradient(145deg,#26272a,#111214);box-shadow:inset 0 0 55px #000}
+.preview-stage:before{content:"";position:absolute;inset:0;border-radius:25px;background:linear-gradient(90deg,#ffffff05 1px,transparent 1px),linear-gradient(#ffffff05 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.neon-text{--neon-color:#60ff38;--neon-core:#d8ffd0;position:relative;z-index:1;max-width:94%;padding:70px 80px;text-align:center;color:var(--neon-core);font-size:clamp(64px,10vw,200px);line-height:1;white-space:nowrap;overflow:visible;text-overflow:clip;text-shadow:0 0 2px #fff,0 0 7px var(--neon-color),0 0 16px var(--neon-color),0 0 34px var(--neon-color),0 0 58px var(--neon-color);transition:font-family .2s,letter-spacing .2s,color .2s,text-shadow .2s}
 .neon-text.cursive{
   font-family:"Authentica","Birthstone",cursive;
   font-weight:400;
