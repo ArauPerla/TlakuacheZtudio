@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tlakuache Ztudio | Cotizador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Birthstone&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:"Authentica";
+  src:url("fonts/Authentica.woff2") format("woff2"),
+      url("fonts/authentica.woff") format("woff");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+:root{
+  --accent:#60ff38;
+  --bg:#f5f5f7;
+  --card:#fff;
+  --text:#17171a;
+  --muted:#6d6d75;
+  --dark:#111;
+  --line:#e8e8eb;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#111;color:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.logo{font-weight:800;letter-spacing:.5px;font-size:21px}.logo span{color:var(--accent)}
+.header-note{color:#aaa;font-size:12px}
+main{max-width:1120px;margin:34px auto;padding:0 18px}
+.hero h1{margin:0;font-size:34px}.hero p{margin:8px 0 24px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:start}
+.card{background:var(--card);border-radius:20px;padding:26px;box-shadow:0 8px 30px #0000000d;margin-bottom:18px}
+.section-head{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+.num{width:34px;height:34px;border-radius:50%;background:#111;color:var(--accent);display:grid;place-items:center;font-weight:800;flex:none}
+.section-head h2{margin:0;font-size:19px}.section-head p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row3{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+label{display:block;font-weight:700;margin:14px 0 7px}
+input[type=number],input[type=text],select{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font-size:15px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px #60ff3826}
+.check{display:flex;align-items:center;gap:9px;padding:13px;background:#f7f7f8;border-radius:10px;font-weight:400;margin:0;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--accent)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tab{border:1px solid #ddd;background:#fff;border-radius:11px;padding:12px 8px;font-weight:800;cursor:pointer}
+.tab.active{background:#111;color:var(--accent);border-color:#111}
+.helper{font-size:11px;color:var(--muted);line-height:1.5;margin-top:7px}
+.subbox{background:#f7f7f8;border-radius:14px;padding:16px;margin-top:14px}
+.subbox-title{font-weight:800;margin-bottom:8px}
+.price-card{background:#111;color:#fff;border-radius:20px;padding:24px;position:sticky;top:88px}
+.preview{background:#111;color:#fff;border-radius:20px;padding:24px;margin:0 0 22px;box-shadow:0 8px 30px #00000018}
+.preview-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+.preview-title{font-weight:800;font-size:25px}.preview-note{font-size:20px;color:#888;text-align:right}
+.preview-stage{height:200px;border-radius:25px;display:grid;place-items:center;overflow:hidden;position:relative;background:linear-gradient(145deg,#26272a,#111214);box-shadow:inset 0 0 55px #000}
+.preview-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ffffff05 1px,transparent 1px),linear-gradient(#ffffff05 1px,transparent 1px);background-size:28px 28px}
+.neon-text{--neon-color:#60ff38;--neon-core:#d8ffd0;position:relative;z-index:1;max-width:94%;padding:70px 80px;text-align:center;color:var(--neon-core);font-size:clamp(64px,10vw,200px);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 2px #fff,0 0 7px var(--neon-color),0 0 16px var(--neon-color),0 0 34px var(--neon-color),0 0 58px var(--neon-color);transition:font-family .2s,letter-spacing .2s,color .2s,text-shadow .2s}
+.neon-text.cursive{
+  font-family:"Authentica","Birthstone",cursive;
+  font-weight:400;
+  font-size:clamp(52px,5vw,100px);
+}
+.neon-text.molde{font-family:"Nunito",sans-serif;font-weight:400;font-size:clamp(52px,5vw,100px);letter-spacing:1.5px}
+.preview-controls{display:grid;grid-template-columns:minmax(0,1fr) 280px 300px;gap:12px;align-items:end;margin-top:14px}.preview-controls label{font-size:12px;color:#bbb;margin:0 0 6px}
+.style-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.style-btn{border:1px solid #3d3d3d;background:#242424;color:#fff;border-radius:10px;padding:10px;cursor:pointer;font-weight:700}
+.style-btn.active{background:var(--accent);border-color:var(--accent);color:#111}
+.color-options{display:flex;flex-wrap:wrap;gap:9px;margin-top:9px}
+.color-dot{width:30px;height:30px;border-radius:50%;border:2px solid #ffffff66;background:var(--swatch);cursor:pointer;position:relative;box-shadow:0 0 9px var(--swatch);transition:transform .15s,box-shadow .15s}
+.color-dot:hover{transform:scale(1.1)}
+.color-dot.active{border-color:#fff;box-shadow:0 0 0 3px #111,0 0 0 5px #fff,0 0 16px var(--swatch)}
+.color-dot.active:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#111;font-size:15px;font-weight:900;text-shadow:0 0 2px #fff}
+.whatsapp{background:#25d366;color:#071c0e}
+.price-label{color:#aaa;font-size:11px;text-transform:uppercase;letter-spacing:1.1px}
+.price{font-size:42px;font-weight:800;color:var(--accent);margin:6px 0 18px;text-shadow:0 0 14px #60ff3835}
+.breakdown{border-top:1px solid #333;padding-top:11px;max-height:360px;overflow:auto}
+.line{display:flex;justify-content:space-between;gap:12px;margin:9px 0;color:#ddd;font-size:13px}
+.line b{color:#fff;text-align:right}.total{border-top:1px solid #333;margin-top:13px;padding-top:14px;font-size:17px}.total b{color:var(--accent)}
+.summary{background:#f7f7f8;color:#222;border-radius:13px;padding:15px;margin-top:18px;font-size:13px;line-height:1.7}
+button.action{width:100%;border:0;border-radius:11px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;margin-top:12px}
+.primary{background:var(--accent);color:#0d0d0d}.secondary{background:#252525;color:#fff}
+.small{font-size:11px;color:#888;line-height:1.5;margin-top:14px}
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.ref-table td,.ref-table th{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left}
+.ref-table th{font-size:11px;text-transform:uppercase;color:var(--muted)}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.price-card{position:static}}
+@media(max-width:620px){.row,.row3,.options,.tabs,.preview-controls{grid-template-columns:1fr}.hero h1{font-size:28px}.card{padding:20px}.header-note{display:none}.preview{padding:16px}.preview-stage{height:250px}.neon-text{font-size:clamp(52px,18vw,90px);padding:16px}}
+@media print{header,.actions,.preview-controls{display:none}body{background:#fff}main{max-width:none;margin:0}.layout{grid-template-columns:1fr}.price-card{position:static;background:#fff;color:#111;border:1px solid #ddd}.price,.total b,.line b{color:#111;text-shadow:none}.line,.price-label{color:#333}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">TLAKUACHE <span>Ztudio</span></div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Cotizador</h1>
+  </div>
+
+  <div class="preview" id="previewCard">
+    <div class="preview-head">
+      <div class="preview-title">Visual del letrero</div>
+      <div class="preview-note">Representación aproximada</div>
+    </div>
+    <div class="preview-stage">
+      <div class="neon-text cursive" id="neonPreview">Tu frase aquí</div>
+    </div>
+    <div class="preview-controls">
+      <div>
+        <label for="previewText">Texto del letrero</label>
+        <input id="previewText" type="text" maxlength="40" value="Tu frase aquí" placeholder="Escribe tu frase">
+      </div>
+      <div class="style-buttons">
+        <button class="style-btn active" type="button" data-style="cursive">Letra cursiva</button>
+        <button class="style-btn" type="button" data-style="molde">Letra de molde</button>
+      </div>
+      <div class="color-picker">
+        <label>Color del neón: <span id="colorName">Verde</span></label>
+        <div class="color-options" role="group" aria-label="Selecciona el color del neón">
+          <button class="color-dot" type="button" data-color="warmWhite" style="--swatch:#ffd9a3" title="Blanco cálido" aria-label="Blanco cálido"></button>
+          <button class="color-dot" type="button" data-color="coldWhite" style="--swatch:#eaf6ff" title="Blanco frío" aria-label="Blanco frío"></button>
+          <button class="color-dot" type="button" data-color="blue" style="--swatch:#1e5bff" title="Azul" aria-label="Azul"></button>
+          <button class="color-dot" type="button" data-color="red" style="--swatch:#ff2424" title="Rojo" aria-label="Rojo"></button>
+          <button class="color-dot" type="button" data-color="pink" style="--swatch:#ff4fbd" title="Rosa" aria-label="Rosa"></button>
+          <button class="color-dot active" type="button" data-color="green" style="--swatch:#60ff38" title="Verde" aria-label="Verde" aria-pressed="true"></button>
+          <button class="color-dot" type="button" data-color="pastelGreen" style="--swatch:#8fffc1" title="Verde pastel" aria-label="Verde pastel"></button>
+          <button class="color-dot" type="button" data-color="amber" style="--swatch:#ffb000" title="Ámbar" aria-label="Ámbar"></button>
+          <button class="color-dot" type="button" data-color="yellow" style="--swatch:#ffe600" title="Amarillo" aria-label="Amarillo"></button>
+          <button class="color-dot" type="button" data-color="orange" style="--swatch:#ff7200" title="Naranja" aria-label="Naranja"></button>
+          <button class="color-dot" type="button" data-color="lightBlue" style="--swatch:#59d9ff" title="Azul claro" aria-label="Azul claro"></button>
+          <button class="color-dot" type="button" data-color="purple" style="--swatch:#a84cff" title="Morado" aria-label="Morado"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+
+      <div class="card">
+        <div class="section-head">
+          <div class="num">1</div>
+          <div><h2>Tipo de cotización</h2><p>Selecciona una base y el cotizador cargará valores de referencia.</p></div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-mode="letrero">Letrero</button>
+          <button class="tab" data-mode="acrilico">Solo acrílico</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div class="num">2</div>
+          <div><h2>Medidas y acrílicos</h2><p>Los precios de acrílico se calculan por cm².</p></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Alto (cm)</label>
+            <input id="alto" type="number" min="1" value="80">
+          </div>
+          <div>
+            <label>Largo (cm)</label>
+            <input id="largo" type="number" min="1" value="40">
+          </div>
+        </div>
+
+        <label>Material principal</label>
+        <select id="material1">
+          <option value="0">Sin acrílico</option>
+          <option value="0.08" selected>Acrílico 3 mm PG transparente — $0.08/cm²</option>
+          <option value="0.10">Acrílico 3 mm color — $0.10/cm²</option>
+          <option value="0.14">Acrílico 5 mm dorado / mate — $0.14/cm²</option>
+          <option value="0.14">Acrílico cristal color — $0.14/cm²</option>
+          <option value="0.11">Acrílico 6 mm CH — $0.11/cm²</option>
+        </select>
+
+        <label>Material secundario</label>
+        <select id="material2">
+          <option value="0">Sin segundo acrílico</option>
+          <option value="0.08">Acrílico 3 mm PG transparente — $0.08/cm²</option>
+          <option value="0.10">Acrílico 3 mm color — $0.10/cm²</option>
+          <option value="0.14" selected>Acrílico cristal color — $0.14/cm²</option>
+          <option value="0.14">Acrílico 5 mm dorado / mate — $0.14/cm²</option>
+          <option value="0.11">Acrílico 6 mm CH — $0.11/cm²</option>
+        </select>
+
+        <label class="check" style="margin-top:14px">
+          <input id="extra5" type="checkbox">
+          <span></span>
+        </label>
+        <div class="subbox">
+          <div class="subbox-title">Tiempo de corte</div>
+          <div class="row">
+            <div>
+              <label>Minutos</label>
+              <input id="cortesAcrilico" type="number" min="0" step="1" value="0">
+            </div>
+            <div>
+              <label>Costo por minuto</label>
+              <input type="number" value="8" disabled>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card" id="neonEnergyCard">
+        <div class="section-head">
+          <div class="num">3</div>
+          <div><h2>Neón y energía</h2><p>Tarifas del archivo: tira neón $40/m y fuentes según amperaje.</p></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Metros de tira neón</label>
+            <input id="neonM" type="number" min="0" step=".1" value="10">
+          </div>
+          <div>
+            <label>Corte de vinil (m)</label>
+            <input id="vinilM" type="number" min="0" step=".1" value="0">
+          </div>
+        </div>
+
+        <label>Fuente / eliminador</label>
+        <select id="fuente">
+          <option value="0">Sin fuente</option>
+          <option value="60">Eliminador 2.5 A — $60</option>
+          <option value="120">Eliminador 5 A — $120</option>
+          <option value="180" selected>Eliminador 7.5 A — $180</option>
+          <option value="150">Fuente 6 A — $150</option>
+          <option value="250">Fuente 12 A — $250</option>
+          <option value="350">Fuente 20 A — $350</option>
+          <option value="400">Fuente 30 A — $400</option>
+          <option value="500">Fuente 50 A — $500</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div class="num">4</div>
+          <div><h2>Accesorios y consumibles</h2><p>Completa las cantidades necesarias para el proyecto.</p></div>
+        </div>
+
+        <div class="row3">
+          <div>
+            <label>Chapetones ($28/u)</label>
+            <input id="chapetones" type="number" min="0" step="1" value="0">
+          </div>
+          <div id="cableAccessory">
+            <label>Cable ($3/m)</label>
+            <input id="cable" type="number" min="0" step=".1" value="1">
+          </div>
+          <div id="termofitAccessory">
+            <label>Termofit ($10/m)</label>
+            <input id="termofit" type="number" min="0" step=".1" value="1">
+          </div>
+        </div>
+
+        <div class="options" style="margin-top:14px">
+          <label class="check"><input id="kola" type="checkbox" checked><span>Kola Loka brocha — $65</span></label>
+          <label class="check" id="estanoAccessory"><input id="estano" type="checkbox" checked><span>Estaño — $12</span></label>
+          <label class="check" id="dimerAccessory"><input id="dimer" type="checkbox"><span>Dimer — $200</span></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div class="num">5</div>
+          <div><h2>Diseño y nivel de trabajo</h2><p>El total final multiplica el subtotal por el nivel de trabajo, como en el archivo.</p></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Unidades de diseño ($50/u)</label>
+            <input id="diseno" type="number" min="0" step=".5" value="1">
+            <div class="helper">Referencia del archivo: 1 = texto sencillo; 2 = trazar logo.</div>
+          </div>
+          <div>
+            <label>Nivel de trabajo</label>
+            <input id="nivel" type="number" min="1" step=".5" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="referencesCard" style="display:none">
+        <div class="section-head">
+          <div class="num">6</div>
+          <div><h2>Referencias de placa</h2><p>Valores conservados del archivo como referencia, sin aplicarlos automáticamente.</p></div>
+        </div>
+        <table class="ref-table">
+          <thead><tr><th>Valor base</th><th>Referencia</th></tr></thead>
+          <tbody>
+            <tr><td>$1,050</td><td>$1,900</td></tr>
+            <tr><td>$1,780</td><td>$3,045</td></tr>
+            <tr><td>$2,200</td><td>$3,700</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <aside class="price-card">
+      <div class="price-label">Precio total estimado</div>
+      <div class="price" id="total">$0 MXN</div>
+
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="line total">
+        <span>Subtotal materiales</span>
+        <b id="subtotal">$0</b>
+      </div>
+      <div class="line">
+        <span>Nivel de trabajo</span>
+        <b id="nivelText">× 3</b>
+      </div>
+      <div class="line total">
+        <span>TOTAL</span>
+        <b id="total2">$0</b>
+      </div>
+
+      <div class="summary" id="summary"></div>
+
+      <div class="actions">
+        <button class="action whatsapp" type="button" onclick="sendWhatsApp()">Enviar por WhatsApp</button>
+        <button class="action secondary" onclick="applyPreset(currentMode)">Restablecer valores</button>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<script>
+const COSTOS = {
+  neon:40,
+  vinil:140,
+  corteAcrilico:8,
+  chapeton:28,
+  cable:3,
+  kola:65,
+  termofit:10,
+  estano:12,
+  dimer:200,
+  diseno:50
+};
+
+let currentMode = "letrero";
+let currentLetterStyle = "cursive";
+let currentNeonColor = "green";
+
+const NEON_COLORS = {
+  warmWhite:{name:"Blanco cálido",glow:"#ffd9a3",core:"#fff7e8"},
+  coldWhite:{name:"Blanco frío",glow:"#d8efff",core:"#ffffff"},
+  blue:{name:"Azul",glow:"#1e5bff",core:"#dce7ff"},
+  red:{name:"Rojo",glow:"#ff2424",core:"#ffd7d7"},
+  pink:{name:"Rosa",glow:"#ff4fbd",core:"#ffe0f3"},
+  green:{name:"Verde",glow:"#60ff38",core:"#d8ffd0"},
+  pastelGreen:{name:"Verde pastel",glow:"#8fffc1",core:"#e0ffed"},
+  amber:{name:"Ámbar",glow:"#ffb000",core:"#ffe6ad"},
+  yellow:{name:"Amarillo",glow:"#ffe600",core:"#fffbd1"},
+  orange:{name:"Naranja",glow:"#ff7200",core:"#ffe1c2"},
+  lightBlue:{name:"Azul claro",glow:"#59d9ff",core:"#dbf8ff"},
+  purple:{name:"Morado",glow:"#a84cff",core:"#ecd8ff"}
+};
+
+const presets = {
+  letrero:{
+    alto:80,largo:40,mat1:"0.08",mat2:"0.14",extra5:false,cortes:0,
+    neon:10,vinil:0,fuente:"180",chap:0,cable:1,termofit:1,kola:true,estano:true,dimer:false,diseno:1,nivel:3
+  },
+  acrilico:{
+    alto:100,largo:40,mat1:"0.08",mat2:"0",extra5:false,cortes:0,
+    neon:10,vinil:0,fuente:"180",chap:4,cable:0,termofit:0,kola:true,estano:false,dimer:false,diseno:2.5,nivel:2.5
+  }
+};
+
+function $(id){return document.getElementById(id)}
+function n(id){return Number($(id).value)||0}
+function money(v){return v.toLocaleString("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:2})}
+
+function materialName(sel){
+  return sel.options[sel.selectedIndex].text.split(" — ")[0];
+}
+
+function calcAcrylic(selectId){
+  const rate = Number($(selectId).value)||0;
+  if(!rate) return 0;
+  let alto=n("alto"), largo=n("largo");
+  const isColor = materialName($(selectId)).toLowerCase().includes("3 mm color");
+  if($("extra5").checked && isColor){ alto+=5; largo+=5; }
+  return alto*largo*rate;
+}
+
+function addLine(lines,name,val){
+  if(val>0) lines.push([name,val]);
+}
+
+function update(){
+  const lines=[];
+  const a1=calcAcrylic("material1");
+  const a2=calcAcrylic("material2");
+  addLine(lines,materialName($("material1")),a1);
+  addLine(lines,materialName($("material2")),a2);
+
+  addLine(lines,"Corte de acrílico",n("cortesAcrilico")*COSTOS.corteAcrilico);
+  if(currentMode==="letrero"){
+    addLine(lines,"Corte de vinil",n("vinilM")*COSTOS.vinil);
+    addLine(lines,"Tira neón",n("neonM")*COSTOS.neon);
+    addLine(lines,$("fuente").options[$("fuente").selectedIndex].text.split(" — ")[0],Number($("fuente").value)||0);
+  }
+  addLine(lines,"Chapetones",n("chapetones")*COSTOS.chapeton);
+  if(currentMode==="letrero") addLine(lines,"Cable cal. estañado",n("cable")*COSTOS.cable);
+  if($("kola").checked) addLine(lines,"Kola Loka brocha",COSTOS.kola);
+  if(currentMode==="letrero"){
+    addLine(lines,"Termofit",n("termofit")*COSTOS.termofit);
+    if($("estano").checked) addLine(lines,"Estaño",COSTOS.estano);
+    if($("dimer").checked) addLine(lines,"Dimer",COSTOS.dimer);
+  }
+  addLine(lines,"Diseño",n("diseno")*COSTOS.diseno);
+
+  const subtotal=lines.reduce((s,x)=>s+x[1],0);
+  const nivel=Math.max(1,n("nivel"));
+  const total=subtotal*nivel;
+
+  $("subtotal").textContent=money(subtotal);
+  $("nivelText").textContent="× "+nivel;
+  $("total").textContent=money(total);
+  $("total2").textContent=money(total);
+
+  $("breakdown").innerHTML=lines.map(([name,val])=>
+    `<div class="line"><span>${name}</span><b>${money(val)}</b></div>`
+  ).join("");
+
+  $("summary").innerHTML=`
+    <b>Resumen</b><br>
+    Tipo: ${currentMode==="letrero"?"Letrero":"Solo acrílico"}<br>
+    Medidas: ${n("alto")} × ${n("largo")} cm<br>
+    ${currentMode==="letrero" ? `Neón: ${n("neonM")} m<br>` : ""}
+    Diseño: ${n("diseno")} unidad(es)<br>
+    Nivel: ${nivel}<br>
+    <b>Total estimado: ${money(total)}</b>
+  `;
+
+  updatePreview();
+}
+
+function updatePreview(){
+  const text = $("previewText").value.trim() || "Tu frase aquí";
+  const neon = $("neonPreview");
+  neon.textContent = text;
+  neon.className = "neon-text " + currentLetterStyle;
+  const color = NEON_COLORS[currentNeonColor] || NEON_COLORS.green;
+  neon.style.setProperty("--neon-color",color.glow);
+  neon.style.setProperty("--neon-core",color.core);
+  $("colorName").textContent=color.name;
+
+}
+
+function sendWhatsApp(){
+  const nivel=Math.max(1,n("nivel"));
+  const texto=$("previewText").value.trim() || "Tu frase aquí";
+  const color=NEON_COLORS[currentNeonColor] || NEON_COLORS.green;
+  const tipoLetra=currentLetterStyle==="cursive" ? "Cursiva" : "Molde";
+  const detalles=currentMode==="letrero"
+    ? `Texto: ${texto}\nTipografía: ${tipoLetra}\nColor: ${color.name}\n`
+    : "";
+  const mensaje=`Hola, quiero solicitar esta cotización de Tlakuache Ztudio:\n\nTipo: ${currentMode==="letrero"?"Letrero":"Solo acrílico"}\nMedidas: ${n("alto")} × ${n("largo")} cm\n${detalles}Nivel de trabajo: ${nivel}\nTotal estimado: ${$("total2").textContent}`;
+  const popup=window.open("https://wa.me/525590572642?text="+encodeURIComponent(mensaje),"_blank");
+  if(popup) popup.opener=null;
+}
+
+function applyPreset(mode){
+  currentMode=mode;
+  const p=presets[mode];
+  $("alto").value=p.alto;$("largo").value=p.largo;
+  $("material1").value=p.mat1;$("material2").value=p.mat2;
+  $("extra5").checked=p.extra5;$("cortesAcrilico").value=p.cortes;
+  $("neonM").value=p.neon;$("vinilM").value=p.vinil;$("fuente").value=p.fuente;
+  $("chapetones").value=p.chap;$("cable").value=p.cable;$("termofit").value=p.termofit;
+  $("kola").checked=p.kola;$("estano").checked=p.estano;$("dimer").checked=p.dimer;
+  $("diseno").value=p.diseno;$("nivel").value=p.nivel;
+
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+
+  const soloAcrilico = mode === "acrilico";
+  $("neonEnergyCard").style.display = soloAcrilico ? "none" : "block";
+  $("previewCard").style.display = soloAcrilico ? "none" : "block";
+  $("cableAccessory").style.display = soloAcrilico ? "none" : "block";
+  $("termofitAccessory").style.display = soloAcrilico ? "none" : "block";
+  $("estanoAccessory").style.display = soloAcrilico ? "none" : "flex";
+  $("dimerAccessory").style.display = soloAcrilico ? "none" : "flex";
+  $("referencesCard").style.display = "none";
+
+  update();
+}
+
+document.querySelectorAll("input,select").forEach(el=>{
+  el.addEventListener("input",update);
+  el.addEventListener("change",update);
+});
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",()=>applyPreset(btn.dataset.mode));
+});
+document.querySelectorAll(".style-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    currentLetterStyle=btn.dataset.style;
+    document.querySelectorAll(".style-btn").forEach(b=>b.classList.toggle("active",b===btn));
+    updatePreview();
+  });
+});
+document.querySelectorAll(".color-dot").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    currentNeonColor=btn.dataset.color;
+    document.querySelectorAll(".color-dot").forEach(b=>{
+      const selected=b===btn;
+      b.classList.toggle("active",selected);
+      b.setAttribute("aria-pressed",selected ? "true" : "false");
+    });
+    updatePreview();
+  });
+});
+
+applyPreset("letrero");
+</script>
+</body>
+</html>
